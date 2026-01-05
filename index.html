@@ -1,1 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VINAY KUMAR M | TRAVEL EVENT COORDINATOR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #fbbf24; /* Warm Amber for Hospitality/Travel */
+            --primary-dim: rgba(251, 191, 36, 0.15);
+            --bg: #0f172a;
+            --text-dim: #94a3b8;
+            --text-bright: #e5e7eb;
+            --card-bg: rgba(30, 41, 59, 0.7);
+        }
 
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+        }
+
+        /* Glassmorphism Scanline Effect */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+            z-index: 9999;
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .portfolio-window {
+            background: var(--card-bg);
+            border: 1px solid var(--primary-dim);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+
+        .portfolio-window.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--primary-dim);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        /* Identity Section */
+        .identity-grid {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            object-fit: cover;
+            box-shadow: 0 0 20px var(--primary-dim);
+        }
+
+        .name-title h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .role-badge {
+            display: inline-block;
+            background: var(--primary-dim);
+            color: var(--primary);
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            border: 1px solid var(--primary);
+        }
+
+        .section {
+            margin-bottom: 45px;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.6s ease-out;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--text-bright);
+            border-left: 4px solid var(--primary);
+            padding-left: 15px;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--primary-dim);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .skill-card:hover {
+            background: var(--primary-dim);
+            transform: translateY(-5px);
+        }
+
+        .skill-card i {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Experience Timeline */
+        .timeline-item {
+            margin-bottom: 25px;
+            padding-left: 20px;
+            border-left: 1px solid var(--primary-dim);
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        .exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .company-name {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .exp-date {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        /* Contact Section */
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .btn-contact {
+            text-decoration: none;
+            color: var(--bg);
+            background: var(--primary);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-contact:hover {
+            filter: brightness(1.1);
+            box-shadow: 0 0 15px var(--primary-dim);
+        }
+
+        @media (max-width: 768px) {
+            .identity-grid { flex-direction: column; text-align: center; }
+            .exp-header { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="portfolio-window" id="window">
+        
+        <div class="header-top">
+            <div><i class="fas fa-globe-americas"></i> TRAVEL COORDINATION ENGINE</div>
+            <div>STATUS: AVAILABLE FOR HIRE</div>
+        </div>
+
+        <div class="identity-grid section visible">
+            <img src="https://i.imgur.com/your-image-placeholder.jpg" alt="Vinay Kumar M" class="profile-pic">
+            <div class="name-title">
+                <h1>Vinay Kumar M</h1>
+                <span class="role-badge">TRAVEL EVENT COORDINATOR</span>
+                <p style="color: var(--text-dim); margin-top: 15px;">
+                    Dynamic Travel Representative with a focus on seamless event coordination, 
+                    [cite_start]reservation systems, and exceptional customer satisfaction[cite: 79, 80].
+                </p>
+            </div>
+        </div>
+
+        <div class="section" id="summary">
+            <div class="section-title"><i class="fas fa-info-circle"></i> EXECUTIVE SUMMARY</div>
+            <div style="color: var(--text-bright); line-height: 1.6;">
+                Expert in providing personalized travel solutions, coordinating complex travel arrangements, 
+                [cite_start]and ensuring smooth client experiences in fast-paced environments[cite: 81, 84]. 
+                [cite_start]Adept at utilizing industry-leading GDS platforms to manage high-volume bookings[cite: 82, 106].
+            </div>
+        </div>
+
+        <div class="section" id="skills">
+            <div class="section-title"><i class="fas fa-concierge-bell"></i> COORDINATION EXPERTISE</div>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <i class="fas fa-plane-departure"></i>
+                    [cite_start]Reservation Systems<br><small>(Amadeus, Sabre)</small> [cite: 88, 89]
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-headset"></i>
+                    [cite_start]Customer Service [cite: 87]
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-comments"></i>
+                    [cite_start]Live Chat & Multilingual [cite: 86, 96]
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-tasks"></i>
+                    [cite_start]Time Management [cite: 90]
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="experience">
+            <div class="section-title"><i class="fas fa-history"></i> EXPERIENCE</div>
+            
+            <div class="timeline-item">
+                <div class="exp-header">
+                    <span class="company-name">BCD Travel Pvt Ltd</span>
+                    [cite_start]<span class="exp-date">Aug 2022 - Current [cite: 102]</span>
+                </div>
+                [cite_start]<div style="color: var(--text-dim); margin-bottom: 10px;">Customer Service Representative II [cite: 103]</div>
+                <ul style="color: var(--text-bright); font-size: 0.9rem;">
+                    [cite_start]<li>Consistently delivered personalized travel solutions exceeding client expectations[cite: 104].</li>
+                    [cite_start]<li>Utilized destination knowledge to provide attractions and transportation advice[cite: 105].</li>
+                    [cite_start]<li>Expertly managed booking platforms for flights, accommodations, and transit[cite: 106].</li>
+                </ul>
+            </div>
+
+            <div class="timeline-item">
+                <div class="exp-header">
+                    <span class="company-name">Transact Global</span>
+                    [cite_start]<span class="exp-date">Aug 2021 - Aug 2022 [cite: 108]</span>
+                </div>
+                [cite_start]<div style="color: var(--text-dim); margin-bottom: 10px;">Senior Customer Service Associate [cite: 109]</div>
+                <p style="color: var(--text-bright); font-size: 0.9rem;">
+                    Resolved complex customer queries and complaints via phone and email to promote 
+                    [cite_start]long-term satisfaction[cite: 110].
+                </p>
+            </div>
+        </div>
+
+        <div class="section" id="contact">
+            <div class="section-title"><i class="fas fa-id-card"></i> CONNECT & EDUCATION</div>
+            <div class="contact-links" style="margin-bottom: 30px;">
+                <a href="mailto:vk855355@gmail.com" class="btn-contact">
+                    <i class="fas fa-envelope"></i> EMAIL
+                </a>
+                <span style="color: var(--text-bright); display: inline-flex; align-items: center; gap: 8px;">
+                    [cite_start]<i class="fas fa-phone"></i> +91 78297 89765 [cite: 78]
+                </span>
+            </div>
+            
+            <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 8px; border-left: 3px solid var(--primary);">
+                <div style="font-weight: bold; color: var(--text-bright);">B.Com | [cite_start]Commerce [cite: 116]</div>
+                <div style="font-size: 0.85rem; color: var(--text-dim);">
+                    [cite_start]BMS Evening College of Arts and Commerce, India (2021) [cite: 115, 117]
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const windowEl = document.getElementById('window');
+        const sections = document.querySelectorAll('.section');
+        
+        // Window animation
+        setTimeout(() => {
+            windowEl.classList.add('active');
+        }, 300);
+
+        // Scroll reveal animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    });
+</script>
+
+</body>
+</html>
