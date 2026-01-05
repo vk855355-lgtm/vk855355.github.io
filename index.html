@@ -2,359 +2,342 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>VINAY KUMAR M | TRAVEL EVENT COORDINATOR</title>
+    <title>Vinay Kumar M | Travel Operations Portfolio</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Playfair+Display:ital,wght@0,800;1,800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #fbbf24; /* Warm Amber for Hospitality/Travel */
-            --primary-dim: rgba(251, 191, 36, 0.15);
-            --bg: #0f172a;
-            --text-dim: #94a3b8;
-            --text-bright: #e5e7eb;
-            --card-bg: rgba(30, 41, 59, 0.7);
+            --primary: #0ea5e9;
+            --dark: #020617;
+            --card-bg: rgba(15, 23, 42, 0.75);
+            --text: #f8fafc;
         }
 
-        * { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-
+        * { box-sizing: border-box; scroll-behavior: smooth; }
         body {
-            background: var(--bg);
-            color: var(--primary);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
             overflow-x: hidden;
-            background-image: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
         }
 
-        /* Glassmorphism Scanline Effect */
-        body::before {
-            content: " ";
-            display: block;
+        /* --- MOVING CINEMATIC BACKGROUND --- */
+        .video-bg-container {
             position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
-            z-index: 9999;
-            background-size: 100% 4px;
-            pointer-events: none;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: #020617;
+            overflow: hidden;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 20px;
+        .moving-gradient {
+            position: absolute;
+            width: 200%; height: 200%;
+            top: -50%; left: -50%;
+            background: radial-gradient(circle at center, #1e293b 0%, #020617 40%, #0c4a6e 100%);
+            animation: rotateBG 20s linear infinite;
+            opacity: 0.6;
         }
 
-        .portfolio-window {
-            background: var(--card-bg);
-            border: 1px solid var(--primary-dim);
-            border-radius: 16px;
-            padding: 40px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
+        @keyframes rotateBG {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.2;
+            animation: drift 30s linear infinite;
+        }
+
+        @keyframes drift {
+            from { background-position: 0 0; }
+            to { background-position: 500px 500px; }
+        }
+
+        /* --- LAYOUT & SECTIONS --- */
+        .section {
+            min-height: 100vh;
+            padding: 120px 10% 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s ease-out;
+            transform: translateY(40px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .portfolio-window.active {
+        .section.active {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--primary-dim);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-            color: var(--text-dim);
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-        }
-
-        /* Identity Section */
-        .identity-grid {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .profile-pic {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 3px solid var(--primary);
-            object-fit: cover;
-            box-shadow: 0 0 20px var(--primary-dim);
-        }
-
-        .name-title h1 {
+        /* HERO & NAME STYLE */
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3.5rem, 10vw, 7rem);
             margin: 0;
-            font-size: 2.5rem;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            line-height: 1;
+            color: #ffffff;
         }
 
-        .role-badge {
+        .hero h1 span { color: var(--primary); font-style: italic; }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 30px;
+            padding: 40px;
+            margin-top: 25px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ABOUT SECTION */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        /* SKILLS & HOBBIES */
+        .tag {
             display: inline-block;
-            background: var(--primary-dim);
+            background: rgba(14, 165, 233, 0.15);
             color: var(--primary);
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-weight: bold;
+            padding: 8px 18px;
+            border-radius: 50px;
+            margin: 5px;
             font-size: 0.9rem;
-            margin-top: 10px;
             border: 1px solid var(--primary);
         }
 
-        .section {
-            margin-bottom: 45px;
-            opacity: 0;
-            transform: translateX(-20px);
-            transition: all 0.6s ease-out;
-        }
-
-        .section.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .section-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            color: var(--text-bright);
-            border-left: 4px solid var(--primary);
-            padding-left: 15px;
-        }
-
-        /* Skills Grid */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .skill-card {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid var(--primary-dim);
-            text-align: center;
-            transition: 0.3s;
-        }
-
-        .skill-card:hover {
-            background: var(--primary-dim);
-            transform: translateY(-5px);
-        }
-
-        .skill-card i {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        /* Experience Timeline */
-        .timeline-item {
-            margin-bottom: 25px;
-            padding-left: 20px;
-            border-left: 1px solid var(--primary-dim);
+        /* TIMELINE */
+        .exp-box {
+            border-left: 2px solid var(--primary);
+            padding-left: 25px;
+            margin-bottom: 30px;
             position: relative;
         }
 
-        .timeline-item::before {
-            content: "";
+        .exp-box::after {
+            content: '';
             position: absolute;
-            left: -6px;
-            top: 0;
-            width: 10px;
-            height: 10px;
+            left: -7px; top: 0;
+            width: 12px; height: 12px;
             background: var(--primary);
             border-radius: 50%;
         }
 
-        .exp-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-        }
-
-        .company-name {
-            color: var(--primary);
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        .exp-date {
-            font-size: 0.85rem;
-            color: var(--text-dim);
-        }
-
-        /* Contact Section */
-        .contact-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .btn-contact {
-            text-decoration: none;
-            color: var(--bg);
-            background: var(--primary);
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-weight: bold;
+        /* LANGUAGE PASSPORT */
+        .lang-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
             transition: 0.3s;
-            display: inline-flex;
+        }
+        .lang-card:hover { background: var(--primary); color: #000; }
+
+        /* CONTACT SECTION */
+        #contact-section { background: rgba(0,0,0,0.6); text-align: center; }
+
+        .contact-btn {
+            display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            gap: 20px;
+            padding: 25px;
+            margin: 15px auto;
+            max-width: 600px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            text-decoration: none;
+            color: white;
+            font-size: 1.3rem;
+            transition: 0.4s;
+            opacity: 0;
+            transform: scale(0.9);
         }
 
-        .btn-contact:hover {
-            filter: brightness(1.1);
-            box-shadow: 0 0 15px var(--primary-dim);
+        .contact-section.active .contact-btn {
+            opacity: 1;
+            transform: scale(1);
         }
+
+        .contact-btn:hover { background: white; color: black; }
+
+        /* DOT NAV */
+        .nav-dot {
+            position: fixed;
+            right: 30px; top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+
+        .dot {
+            width: 10px; height: 10px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .dot.active { background: var(--primary); transform: scale(1.5); }
 
         @media (max-width: 768px) {
-            .identity-grid { flex-direction: column; text-align: center; }
-            .exp-header { flex-direction: column; }
+            .about-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 3.5rem; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="portfolio-window" id="window">
-        
-        <div class="header-top">
-            <div><i class="fas fa-globe-americas"></i> TRAVEL COORDINATION ENGINE</div>
-            <div>STATUS: AVAILABLE FOR HIRE</div>
-        </div>
-
-        <div class="identity-grid section visible">
-            <img src="https://i.imgur.com/your-image-placeholder.jpg" alt="Vinay Kumar M" class="profile-pic">
-            <div class="name-title">
-                <h1>Vinay Kumar M</h1>
-                <span class="role-badge">TRAVEL EVENT COORDINATOR</span>
-                <p style="color: var(--text-dim); margin-top: 15px;">
-                    Dynamic Travel Representative with a focus on seamless event coordination, 
-                    [cite_start]reservation systems, and exceptional customer satisfaction[cite: 79, 80].
-                </p>
-            </div>
-        </div>
-
-        <div class="section" id="summary">
-            <div class="section-title"><i class="fas fa-info-circle"></i> EXECUTIVE SUMMARY</div>
-            <div style="color: var(--text-bright); line-height: 1.6;">
-                Expert in providing personalized travel solutions, coordinating complex travel arrangements, 
-                [cite_start]and ensuring smooth client experiences in fast-paced environments[cite: 81, 84]. 
-                [cite_start]Adept at utilizing industry-leading GDS platforms to manage high-volume bookings[cite: 82, 106].
-            </div>
-        </div>
-
-        <div class="section" id="skills">
-            <div class="section-title"><i class="fas fa-concierge-bell"></i> COORDINATION EXPERTISE</div>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <i class="fas fa-plane-departure"></i>
-                    [cite_start]Reservation Systems<br><small>(Amadeus, Sabre)</small> [cite: 88, 89]
-                </div>
-                <div class="skill-card">
-                    <i class="fas fa-headset"></i>
-                    [cite_start]Customer Service [cite: 87]
-                </div>
-                <div class="skill-card">
-                    <i class="fas fa-comments"></i>
-                    [cite_start]Live Chat & Multilingual [cite: 86, 96]
-                </div>
-                <div class="skill-card">
-                    <i class="fas fa-tasks"></i>
-                    [cite_start]Time Management [cite: 90]
-                </div>
-            </div>
-        </div>
-
-        <div class="section" id="experience">
-            <div class="section-title"><i class="fas fa-history"></i> EXPERIENCE</div>
-            
-            <div class="timeline-item">
-                <div class="exp-header">
-                    <span class="company-name">BCD Travel Pvt Ltd</span>
-                    [cite_start]<span class="exp-date">Aug 2022 - Current [cite: 102]</span>
-                </div>
-                [cite_start]<div style="color: var(--text-dim); margin-bottom: 10px;">Customer Service Representative II [cite: 103]</div>
-                <ul style="color: var(--text-bright); font-size: 0.9rem;">
-                    [cite_start]<li>Consistently delivered personalized travel solutions exceeding client expectations[cite: 104].</li>
-                    [cite_start]<li>Utilized destination knowledge to provide attractions and transportation advice[cite: 105].</li>
-                    [cite_start]<li>Expertly managed booking platforms for flights, accommodations, and transit[cite: 106].</li>
-                </ul>
-            </div>
-
-            <div class="timeline-item">
-                <div class="exp-header">
-                    <span class="company-name">Transact Global</span>
-                    [cite_start]<span class="exp-date">Aug 2021 - Aug 2022 [cite: 108]</span>
-                </div>
-                [cite_start]<div style="color: var(--text-dim); margin-bottom: 10px;">Senior Customer Service Associate [cite: 109]</div>
-                <p style="color: var(--text-bright); font-size: 0.9rem;">
-                    Resolved complex customer queries and complaints via phone and email to promote 
-                    [cite_start]long-term satisfaction[cite: 110].
-                </p>
-            </div>
-        </div>
-
-        <div class="section" id="contact">
-            <div class="section-title"><i class="fas fa-id-card"></i> CONNECT & EDUCATION</div>
-            <div class="contact-links" style="margin-bottom: 30px;">
-                <a href="mailto:vk855355@gmail.com" class="btn-contact">
-                    <i class="fas fa-envelope"></i> EMAIL
-                </a>
-                <span style="color: var(--text-bright); display: inline-flex; align-items: center; gap: 8px;">
-                    [cite_start]<i class="fas fa-phone"></i> +91 78297 89765 [cite: 78]
-                </span>
-            </div>
-            
-            <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 8px; border-left: 3px solid var(--primary);">
-                <div style="font-weight: bold; color: var(--text-bright);">B.Com | [cite_start]Commerce [cite: 116]</div>
-                <div style="font-size: 0.85rem; color: var(--text-dim);">
-                    [cite_start]BMS Evening College of Arts and Commerce, India (2021) [cite: 115, 117]
-                </div>
-            </div>
-        </div>
-
-    </div>
+<div class="video-bg-container">
+    <div class="moving-gradient"></div>
+    <div class="particles"></div>
 </div>
 
+<div class="nav-dot">
+    <div class="dot active" onclick="scrollToSec('hero')"></div>
+    <div class="dot" onclick="scrollToSec('about')"></div>
+    <div class="dot" onclick="scrollToSec('experience')"></div>
+    <div class="dot" onclick="scrollToSec('skills')"></div>
+    <div class="dot" onclick="scrollToSec('contact-section')"></div>
+</div>
+
+<section id="hero" class="section active">
+    <div class="hero">
+        <p style="letter-spacing: 8px; opacity: 0.6; font-size: 0.8rem;">ESTABLISHED 2017</p>
+        <h1>Vinay<br><span>Kumar M</span></h1>
+        <p style="margin-top: 20px; font-size: 1.2rem; max-width: 600px; font-weight: 300; opacity: 0.8;">
+            Specialist in Travel Coordination, Global Logistics, and Customer Success.
+        </p>
+    </div>
+</section>
+
+<section id="about" class="section">
+    <h2 style="font-family: 'Playfair Display'; font-size: 3rem;">About <span>Me</span></h2>
+    <div class="glass-card about-grid">
+        <div>
+            <p style="font-size: 1.1rem; line-height: 1.8; font-weight: 300;">
+                I am a dynamic and customer-focused Travel Representative with extensive experience in the travel industry. 
+                I specialize in coordinating seamless travel experiences by leveraging in-depth knowledge of global destinations, 
+                local customs, and transportation logistics.
+            </p>
+            <p style="font-size: 1.1rem; line-height: 1.8; font-weight: 300;">
+                Whether it's managing high-priority corporate portfolios or resolving complex travel conflicts, 
+                I thrive in fast-paced environments to deliver superior results for my clients.
+            </p>
+        </div>
+        <div>
+            <h4 style="color: var(--primary); margin-bottom: 10px;">Personal Interests</h4>
+            <div class="tag">Cricket</div>
+            <div class="tag">Video Games</div>
+            <div class="tag">Cooking</div>
+        </div>
+    </div>
+</section>
+
+<section id="experience" class="section">
+    <h2 style="font-family: 'Playfair Display'; font-size: 3rem;">Career <span>Chronology</span></h2>
+    <div class="glass-card">
+        <div class="exp-box">
+            <h3 style="margin:0;">BCD Travel Pvt Ltd</h3>
+            <p style="color: var(--primary); font-weight: 600;">Customer Service Representative II | Aug 2022 - Present</p>
+            <p style="font-size: 0.95rem; opacity: 0.8;">Expertly using Amadeus and Sabre systems to manage bookings, accommodations, and personalized travel itineraries while maintaining elite customer satisfaction scores.</p>
+        </div>
+        <div class="exp-box">
+            <h3 style="margin:0;">Transact Global</h3>
+            <p style="color: var(--primary); font-weight: 600;">Senior Customer Service Associate | Aug 2021 - Aug 2022</p>
+            <p style="font-size: 0.95rem; opacity: 0.8;">Handled professional multi-channel communication (Phone/Email) to resolve high-priority complaints and promote satisfaction.</p>
+        </div>
+        <div class="exp-box">
+            <h3 style="margin:0;">Intarvo Technologies</h3>
+            <p style="color: var(--primary); font-weight: 600;">Customer Support Associate | Aug 2017 - Jan 2021</p>
+            <p style="font-size: 0.95rem; opacity: 0.8;">Provided professional customer experiences across online and face-to-face interactions, upholding company reputation.</p>
+        </div>
+    </div>
+</section>
+
+<section id="skills" class="section">
+    <h2 style="font-family: 'Playfair Display'; font-size: 3rem;">Capabilities</h2>
+    <div class="glass-card">
+        <h4 style="margin-top:0; letter-spacing: 2px;">TECHNICAL TOOLKIT</h4>
+        <div style="margin-bottom: 30px;">
+            <div class="tag">Amadeus GDS</div>
+            <div class="tag">Sabre GDS</div>
+            <div class="tag">Live Chat Operations</div>
+            <div class="tag">Reservation Systems</div>
+            <div class="tag">Problem Resolution</div>
+            <div class="tag">Time Management</div>
+            <div class="tag">Multitasking</div>
+        </div>
+
+        <h4 style="letter-spacing: 2px;">LANGUAGE PASSPORT</h4>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;">
+            <div class="lang-card"><strong>English</strong><br><small>First Language</small></div>
+            <div class="lang-card"><strong>Tamil</strong><br><small>Advanced</small></div>
+            <div class="lang-card"><strong>Kannada</strong><br><small>Proficient</small></div>
+            <div class="lang-card"><strong>Hindi</strong><br><small>Intermediate</small></div>
+        </div>
+    </div>
+</section>
+
+<section id="contact-section" class="section contact-section">
+    <h2 style="font-family: 'Playfair Display'; font-size: 4rem;">Get In <span>Touch</span></h2>
+    <div style="max-width: 800px; margin: 0 auto;">
+        <a href="mailto:vk855355@gmail.com" class="contact-btn" style="transition-delay: 0.1s;">
+            <i class="fas fa-envelope"></i> vk855355@gmail.com
+        </a>
+        <a href="tel:+917829789765" class="contact-btn" style="transition-delay: 0.3s;">
+            <i class="fas fa-phone"></i> +91 78297 89765
+        </a>
+        <div class="contact-btn" style="transition-delay: 0.5s;">
+            <i class="fas fa-map-marker-alt"></i> Bengaluru, India 560091
+        </div>
+    </div>
+
+    <div class="glass-card" style="margin-top: 50px; text-align: left;">
+        <h4 style="margin-top:0; color:var(--primary);">Academic History</h4>
+        <p><strong>B.Com | Commerce</strong> - BMS Evening College of Arts and Commerce (2021)</p>
+        <p><strong>PUC | Commerce</strong> - Om Sai Pu College, Bengaluru (2017)</p>
+        <p><strong>SSLC</strong> - Anjali Convent and Nightingale High School (2015)</p>
+    </div>
+</section>
+
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const windowEl = document.getElementById('window');
-        const sections = document.querySelectorAll('.section');
-        
-        // Window animation
-        setTimeout(() => {
-            windowEl.classList.add('active');
-        }, 300);
+    // Smooth scroll and dot activation
+    const sections = document.querySelectorAll('.section');
+    const dots = document.querySelectorAll('.dot');
 
-        // Scroll reveal animation
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-
+    window.addEventListener('scroll', () => {
+        let current = "";
         sections.forEach(section => {
-            observer.observe(section);
+            const sectionTop = section.offsetTop;
+            if (pageYOffset >= (sectionTop - 300)) {
+                section.classList.add('active');
+                current = section.getAttribute('id');
+            }
+        });
+        dots.forEach(dot => {
+            dot.classList.remove('active');
+            if (dot.getAttribute('onclick').includes(current)) {
+                dot.classList.add('active');
+            }
         });
     });
+
+    function scrollToSec(id) {
+        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
 </script>
 
 </body>
